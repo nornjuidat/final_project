@@ -8,11 +8,10 @@
   "version": "1.0.0",
   "description": "פרויקט גמר",
   "main": "index.js",
-  "devDependencies": {},
- "scripts": {
-  "start": "node index.js",
-  "dev": "nodemon index.js"
-},
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nornjuidat/final_project.git"
