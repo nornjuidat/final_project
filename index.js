@@ -9,6 +9,8 @@ app.use(express.json());
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
+const main_api_R = require("./Routers/main_api_R");
+app.use("/api", main_api_R);
 
 let db_M = require('./db');
 global.db_pool = db_M.pool;
