@@ -35,9 +35,9 @@ async function GetAllItems(req, res, next) {
 }
 
 async function AddItem(req,res,next){
-    let user_id        = req.body.user_id   || "";
-    let message        = req.body.message   || "";
-    let date_target    = req.body.date_target   || "";
+    let user_id          = req.body.user_id        || "";
+    let message          = req.body.message        || "";
+    let date_target      = req.body.date_target    || "";
 
 
     res.ok=false;
@@ -62,7 +62,66 @@ async function AddItem(req,res,next){
     next();
 }
 
+
+async function DeleteItem(req,res,next){
+    let notification_id      = req.body.notification_id  || -1 ;
+    let Query = `DELETE FROM ${tableName}  `;
+    Query += ` WHERE notification_id=? ` ;
+    let values = [notification_id];
+
+    res.ok=false;
+    if(notification_id<0){
+        return res.status(500).json({status:"ERROR",message: "id is not valid"});
+    }
+    let rows= await GenObj_Mid.QueryExecSimpleReply(Query,values);
+    if(rows === false){
+        res.err="חלה תקלה, נא לנסות שנית";
+        return res.status(500).json({status:"ERROR",Query: Query,err:res.err,values:values});
+    }
+    res.ok=true;
+
+    next();
+}
+
+
+async function UpdateItem(req,res,next){
+    let notification_id  = req.params.notification_id   || -1;
+    let user_id        = req.body.user_id               || "";
+    let message        = req.body.message               || "";
+    let date_target    = req.body.date_target           || "";
+
+
+    let Query = `UPDATE ${tableName} SET `;
+    Query += `user_id            = ?,   `;
+    Query += `message            = ?,   `;
+    Query += `date_target        = ?   `;
+    Query += ` WHERE notification_id=?` ;
+
+    let values = [user_id, message, date_target, notification_id];
+
+    res.ok=false;
+    res.err="";
+    if(notification_id<0){
+        return res.status(500).json({status:"ERROR",message: "id is not valid"});
+    }
+    if(user_id === "" || message === "" || date_target === "" ){
+        res.err="wrong parameters";
+        return next();
+    }
+    let rows= await GenObj_Mid.QueryExecSimpleReply(Query,values);
+    if(rows === false){
+        res.err="חלה תקלה, נא לנסות שנית";
+        return res.status(500).json({status:"ERROR",Query: Query,err:res.err,values:values});
+    }
+    res.ok=true;
+
+    next();
+}
+
+
 module.exports={
     GetAllItems,
     AddItem,
+    DeleteItem,
+    UpdateItem,
 }

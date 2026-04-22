@@ -19,3 +19,19 @@ router.post("/Add", [notifications_Mid.AddItem], (req, res) => {
     else
         return res.status(500).json({message: res.err});
 });
+
+
+router.delete("/Delete", [notifications_Mid.DeleteItem], (req, res) => {
+    if(res.ok)
+        res.status(200).json({message:"OK"});
+    else
+        return res.status(500).json({message: res.err});
+});
+
+
+router.put("/Update/:notification_id", [notifications_Mid.UpdateItem], (req, res) => {
+    if(res.ok)
+        res.status(200).json({message:"OK"});
+    else
+        return res.status(500).json({message: res.err});
+});
