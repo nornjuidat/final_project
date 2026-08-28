@@ -44,7 +44,7 @@ async function AddItem(req,res,next)
      let  name       =      req.body.name  || "" ;
      let  species    =      req.body.species  || "" ;
      let  age        =      req.body.age  || -1 ;
-     let  photo_url  =      req.body.photo_url  || "" ;
+     let  photo_url  =      req.file ? `/uploads/${req.file.filename}` : "";
      let  owner_id   =      req.body.owner_id  || -1 ;
      let  vet_id     =      req.body.vet_id  || -1;
 
@@ -106,11 +106,11 @@ async function DeleteItem(req,res,next)
 async function UpdateItem(req,res,next)
 {
 
-     let animal_id   =      req.params.animal_id     || -1;
+     let animal_id   =      req.body.animal_id     || -1;
      let  name       =      req.body.name  || "" ;
      let  species    =      req.body.species  || "" ;
      let  age        =      req.body.age  || -1 ;
-     let  photo_url  =      req.body.photo_url  || "" ;
+     let  photo_url  =      req.file ? `/uploads/${req.file.filename}`: req.body.photo_url || "";
      let  owner_id   =      req.body.owner_id  || -1 ;
      let  vet_id     =      req.body.vet_id  || -1;
 

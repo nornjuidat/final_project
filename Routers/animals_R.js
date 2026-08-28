@@ -3,6 +3,7 @@ const router = express.Router();
 module.exports = router;
 
 const animals_Mid = require("../Middlewares/animals_Mid");
+const upload = require("../Middlewares/Upload_Mid");
 
 router.get("/List", [animals_Mid.GetAllItems], (req, res) => {
     if(res.ok) {
@@ -13,7 +14,7 @@ router.get("/List", [animals_Mid.GetAllItems], (req, res) => {
 });
 
 
-router.post("/Add", [animals_Mid.AddItem], (req, res) => {
+router.post("/Add", [upload.single("photo_url"), animals_Mid.AddItem], (req, res) => {
     if(res.ok)
         res.status(200).json({message:"OK", Last_Id:res.insertId});
     else
@@ -29,10 +30,9 @@ router.delete("/Delete", [animals_Mid.DeleteItem], (req, res) => {
 });
 
 
-router.put("/Update/:animal_id", [animals_Mid.UpdateItem], (req, res) => {
+router.put("/Update", [upload.single("photo_url"),animals_Mid.UpdateItem], (req, res) => {
     if(res.ok)
         res.status(200).json({message:"OK"});
     else
         return res.status(500).json({message: res.err});
 });
-

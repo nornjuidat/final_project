@@ -14,6 +14,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/uploads", express.static("uploads"));
 
 const main_api_R = require("./Routers/main_api_R");
 app.use("/api", main_api_R);
